@@ -24,3 +24,9 @@ from PIL import Image
 img_name = "/Users/francis/Nextcloud/Mars_MGS_MOLA_DEM_mosaic_global_463m.tiff"
 im = Image.open(img_name)
 im.show()
+
+#%%
+import numpy as np
+
+a = np.array([1, 2])
+# %%

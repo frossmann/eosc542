@@ -7,13 +7,14 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from sklearn.preprocessing import StandardScaler
 
+
 # df = pandas.DataFrame(data=numpy.random.normal(0, 1, (20, 10)))
 filename = "/Users/francis/Desktop/SuppTable1_DF_all_corr_20200203.xlsx"
 df_full = pd.read_excel(filename, skiprows=3)
 
 df = df_full.iloc[1:,8:-2]
 dff = df_full.iloc[1:,:]
-df = df.drop(labels=['Average Basal width',
+df = df.drop(labels = [ 'Average Basal width',
 'Minimum Basal width ',
  'Average plateau width',
  'Width ratio (Wp/Wb)',
@@ -29,7 +30,7 @@ df = df.drop(labels=['Average Basal width',
 
 df_full = pd.read_csv('/Users/francis/Desktop/downloadSupplement.txt',delimiter='\t', engine='python', header=1)
 df = df_full.drop(columns=['Mountain', 'Shape'])
-df['Approximate Width, km'][2] = 98
+df['Approximate Width, km'][2] = 98     # test
 
 scaler = StandardScaler()
 scaled_data = scaler.fit_transform(df)
