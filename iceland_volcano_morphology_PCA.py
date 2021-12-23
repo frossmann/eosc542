@@ -32,6 +32,7 @@ df_full = pd.read_csv('/Users/francis/Desktop/downloadSupplement.txt',delimiter=
 df = df_full.drop(columns=['Mountain', 'Shape'])
 df['Approximate Width, km'][2] = 98     # test
 
+#%%
 scaler = StandardScaler()
 scaled_data = scaler.fit_transform(df)
 df_st = pd.DataFrame(scaled_data, columns = [cname for cname in df.columns])
@@ -44,6 +45,7 @@ scores = PCA().fit_transform(scaled_data)
 # pca_out = PCA(n_components=df.shape[1])
 # pca_out.fit(df_st)
 # scores = PCA().fit_transform(df_st)
+
 #%%
 # Reformat and view results
 loadings = pd.DataFrame(pca_out.components_.T,
@@ -52,10 +54,13 @@ index=df.columns)
 print(loadings)
 
 variance = pca_out.explained_variance_ratio_
-plt.plot(variance)
+plt.plot(variance,label='individual')
+plt.plot(np.cumsum(variance),label='cumulative')
 plt.ylabel('Explained Variance')
 plt.xlabel('Components')
-plt.show()
+plt.grid()
+xl = plt.xlim()
+plt.hlines(0.8, xl[0], xl[1])
 
 #%%
 plt.figure()
@@ -76,10 +81,14 @@ for angle in range(0, 360):
 #%% 
 color = np.arange(0, scores.shape[0])
 fig, (ax1, ax2, ax3, ax4) = plt.subplots(4)
-ax1.scatter(scores[:,0], scores[:,1], c=df['Approximate Volume, km3']) 
-ax2.scatter(scores[:,0], scores[:,2], c=df['Approximate Volume, km3'])  
-ax3.scatter(scores[:,1], scores[:,2], c=df['Approximate Volume, km3'])  
-ax4.scatter(scores[:,1], scores[:,3], c=df['Approximate Volume, km3'])  
+# ax1.scatter(scores[:,0], scores[:,1], c=df['Approximate Volume, km3']) 
+# ax2.scatter(scores[:,0], scores[:,2], c=df['Approximate Volume, km3'])  
+# ax3.scatter(scores[:,1], scores[:,2], c=df['Approximate Volume, km3'])  
+# ax4.scatter(scores[:,1], scores[:,3], c=df['Approximate Volume, km3'])  
+ax1.scatter(scores[:,0], scores[:,1], c=df['Volume']) 
+ax2.scatter(scores[:,0], scores[:,2], c=df['Volume'])  
+ax3.scatter(scores[:,1], scores[:,2], c=df['Volume'])  
+ax4.scatter(scores[:,1], scores[:,3], c=df['Volume'])  
 
 
 
@@ -146,4 +155,7 @@ for num_clusters in range_n_clusters:
 # ssd
 plt.figure()
 plt.plot(range_n_clusters, ssd)
+# %%
+
+from mpl_toolkits.basemap import Basemap
 # %%
